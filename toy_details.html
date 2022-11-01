@@ -6,49 +6,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>玩具詳情</title>
 <link href="css/toy_detailscss.css" rel="stylesheet" type="text/css">
+<script src="script/myscripts.js"></script>
 </head>
 
+
+
 <body>
-	<!--- Header--->
-		<header class="header">
-			<ul class="header_tab">
-				<img src="HHS Logo cropped.png" width="98" height="100" alt=""/>
-				<li>主頁</li>
-				<li>玩具類別</li>
-				<li>鳴謝</li>
-			</ul>
-		</header>
-	<a href="index.html" style="padding-left:7%;">返回</a>
-	<!--- Content section--->
-	<div class="main_container">
-		<div class="thumbnail">
-			<img src="images/placeholder_1.jpg" alt=""/>
-		</div>
-	<!--- Description--->
-		<div class="description_container">
-			<div style="float: right;">已借出</div>
-			<div class="title">書名</div>
-			<div class="quickest_borrow_date">最快借出時間:</div>
-			<div>年齡</div>
-			<p></p>
-			<div>訓練功能: Lorem Ipsum</div>
-			<div>玩具索引號: SJ552 4444</div>
-			<div>編號: ABCDEF</div>
-			<li>
-				<input type="radio" name="tabs" id="tab1"/>
-			</li>
-		</div>
-	</div>
-	<!--- Footer--->
-	<footer class="footer">
-			<div class="footer_container">
-				<div class="footer_title1">賽馬會星亮資源中心</div>
-				<div class="footer_title2">共創可能計畫 網上玩具圖書館糸統</div>
-				<p>地址: 何文田孝民街地下愛民邨新民樓地下106-117室</p>
-				<p>聯絡電話: 3956 4651 <br>
-				電郵: jcsrc@heephong.org</p>
-				<p class="copyright">© 2022 協康會，版權所有</p>
-			</div>
-		</footer>
+<!--- Header--->
+<header class="header">
+  <ul class="header_tab">
+    <img src="HHS Logo cropped.png" width="98" height="100" alt=""/>
+    <li><a href="index.html">主頁</a></li>
+    <li>玩具類別</li>
+    <li>鳴謝</li>
+  </ul>
+</header>
+<a href="index.html" style="padding-left:7%;">&#60;返回</a> 
+<!--- Content section--->
+<div class="main_container">
+  <div class="thumbnail"> <img src="images/placeholder_1.jpg" alt=""/> </div>
+  <!--- Description--->
+  <div class="description_container">
+      <div style="float: right;">已借出</div>
+      <div class="title">書名</div>
+      <div class="quickest_borrow_date">最快借出時間:</div>
+      <div>年齡</div>
+      <p></p>
+      <div style="padding-bottom: 6px">訓練功能: Lorem Ipsum</div>
+      <div style="padding-bottom: 6px">玩具索引號: SJ552 4444</div>
+      <div style="padding-bottom: 20px">編號: ABCDEF</div>
+      <!--- Tab menu--->
+      <div class="tab">
+          <button class="tablinks" onclick="openCity(event, 'Instructions')">玩法</button>
+          <button class="tablinks" onclick="openCity(event, 'Quantity')">配件及數量</button>
+      </div>
+
+      <div id="Instructions" class="tabcontent">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Faucibus nisl tincidunt eget nullam non nisi est sit amet. Nibh tortor id aliquet lectus. Malesuada fames ac turpis egestas maecenas pharetra convallis posuere. Lectus sit amet est placerat in egestas erat imperdiet. Purus in massa tempor nec feugiat nisl. Nisl tincidunt eget nullam non nisi. Fermentum iaculis eu non diam. Feugiat nibh sed pulvinar proin gravida hendrerit. Laoreet non curabitur gravida arcu ac. Luctus accumsan tortor posuere ac ut consequat semper. Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper sit. Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet.</p>
+      </div>
+
+      <div id="Quantity" class="tabcontent">
+          <p>Faucibus ornare suspendisse sed nisi lacus sed viverra tellus. Sagittis nisl rhoncus mattis rhoncus urna.</p>
+      </div>
+  </div>
+</div>
+<!--- Footer--->
+<footer class="footer">
+  <div class="footer_container">
+    <div class="footer_title1">賽馬會星亮資源中心</div>
+    <div class="footer_title2">共創可能計畫 網上玩具圖書館糸統</div>
+    <p>地址: 何文田孝民街地下愛民邨新民樓地下106-117室</p>
+    <p>聯絡電話: 3956 4651 <br>
+      電郵: jcsrc@heephong.org</p>
+    <p class="copyright">© 2022 協康會，版權所有</p>
+  </div>
+</footer>
 </body>
 </html>
