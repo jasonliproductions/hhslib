@@ -14,46 +14,6 @@
 	margin: auto;
 }
 
-.main_container{
-	padding-left: 7%;
-	padding-right: 7%;
-	display: flex;
-}
-
-.thumbnail{
-	background-color: #808080;
-	width: 50%;
-	height: 400px;
-
-}
-
-.thumbnail img{
-	width: 100%;
-	height: 400px;	
-	object-fit: cover;
-	object-position: 50% 50%;
-	border: 1px solid #000000;
-}
-
-.description_container{
-	width: 46%;
-	padding-left: 18px;
-}
-
-.title{
-	font-size: 24px;
-	font-weight: bold;
-}
-
-.quickest_borrow_date{
-	float: right;
-	font-size: 12px;
-}
-
-.text_field{
-	border: 1px solid #ED6E23;
-	height: 250px;
-}
 
 .footer{
 	border-top: 20px solid #ED6E23;
