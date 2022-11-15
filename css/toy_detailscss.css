@@ -129,3 +129,44 @@ a{
 	height: 185px;
 	overflow: auto;
 }
+
+@media only screen and (max-width: 780px) {
+	.main_container{
+		display: block;
+	}
+
+	.thumbnail{
+		width: 100%;
+	}
+
+	.description_container{
+		width: 100%;
+	}
+
+	.misc_description{
+		font-size: 13px;
+	}
+
+	.title {
+		font-size: 18px;
+	}
+
+	.tab button{
+		font-size: 12px;
+		padding: 9px 10px;
+	}
+
+	.tabcontent{
+		font-size: 12px;
+	}
+}
+
+	@media only screen and (max-width: 320px) {
+		.header_tab {
+			display: grid;
+			grid-template-columns: auto;
+			grid-gap: 1em 0em;
+			padding-top: 20px;
+			justify-content: left;
+		}
+	}

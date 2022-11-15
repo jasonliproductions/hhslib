@@ -181,6 +181,17 @@ a {
 }
 
 @media only screen and (max-width: 320px) {
+	.header_tab {
+		display: grid;
+		grid-template-columns: auto;
+		grid-gap: 1em 0em;
+		padding-top: 20px;
+		justify-content: left;
+	}
+
+	.hero_banner{
+		height: 240px;
+	}
 
 	.search_bar_checkbox {
 		grid-template-columns: auto;
