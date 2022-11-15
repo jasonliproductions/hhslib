@@ -2,7 +2,7 @@
 .body{
 }
 
-a{
+a {
 	text-decoration: none;
 	color: black;
 }
@@ -74,7 +74,6 @@ a{
 	display: grid;
 	grid-template-columns: auto auto auto;
 	margin-right: 20%;
-	height: 75px;
 }
 
 
@@ -171,9 +170,6 @@ a{
 	}
 
 @media only screen and (max-width: 780px) {
-	.search_bar {
-		height: 400px;
-	}
 
 	.search_bar_checkbox {
 		grid-template-columns: auto auto;
@@ -185,9 +181,6 @@ a{
 }
 
 @media only screen and (max-width: 320px) {
-	.search_bar {
-		height: 278px;
-	}
 
 	.search_bar_checkbox {
 		grid-template-columns: auto;
