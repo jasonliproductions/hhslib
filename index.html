@@ -6,8 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>協康會圖書</title>
 	<link href="css/indexcss.css" rel="stylesheet" type="text/css">
-	<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
-	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src="script/myscripts.js"></script>
 </head>
@@ -16,81 +15,115 @@
 	<script src="js/bootstrap.min.js"></script>
 	<!--- Footer and hero banner section--->
 	<header class="header">
-		<ul class="header_tab">
+		<nav class="navbar navbar-expand-lg navbar-light">
 			<img src="HHS Logo cropped.png" width="98" height="100" alt="" />
-			<li ><a href="index.html" class="text-decoration-none" style="color: #000000;">主頁</a></li>
-			<li>玩具類別</li>
-			<li><a href="specialthanks.html" class="text-decoration-none" style="color: #000000;">鳴謝</a></li>
-		</ul>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto ml-5">
+					<li class="nav-item active">
+						<a class="nav-link" href="index.html">主頁<span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							玩具類別
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="#">Action</a>
+							<a class="dropdown-item" href="#">Another action</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Something else here</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="specialthanks.html">鳴謝</a>
+					</li>
+				</div>
+		</nav>
 	</header>
 	<div class="hero_banner">
+		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img class="d-block w-100" src="images/placeholder_2.jpg" alt="First slide">
+				</div>
+				<div class="carousel-item">
+					<img class="d-block w-100" src="images/placeholder_1.jpg" alt="Second slide">
+				</div>
+				<div class="carousel-item">
+					<img class="d-block w-100" src="..." alt="Third slide">
+				</div>
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
 	</div>
 	<!--- Search bar section--->
 	<div class="search_bar">
 		<div>
-			<input style="padding-left: 20px;" name="search_term" class="search_bar_field_searchterm" placeholder="輸入關鍵字" classtype="text">
+			<input style="padding-left: 20px;" id="keyword" class="search_bar_field_searchterm" placeholder="輸入關鍵字" type="text">
 		</div>
 		<div>
-			<select style="padding-left: 12px;" class="search_bar_field_searchterm_category">
-				<option>訓練功能1</option>
-				<option>訓練功能2</option>
+			<select id="training_function" style="padding-left: 12px;" class="search_bar_field_searchterm_category">
+				<option value="ITEM_01">大肌肉協調及平衡(踢,拋,接等等)</option>
+				<option value="ITEM_02">感官訓練(視覺,聽覺,觸覺等等)</option>
+				<option value="ITEM_03">小肌肉協調(穿,插,疊等等)</option>
+				<option value="ITEM_04">遊戲技能(想像,合作,模仿等等)</option>
+				<option value="ITEM_05">基本手部功能(拾,放,拉等等)</option>
+				<option value="ITEM_06">口語前溝通 (口部動作,發聲練習等等)</option>
+				<option value="ITEM_07">語言理解/表達(詞彙,實物,動作,抽象,句子等等)</option>
+				<option value="ITEM_08">智能訓練 (大小,顏色,形狀,空間,配對,分類,歸類,因果關係,時間關係等等)</option>
+				<option value="ITEM_09">其他</option>
 			</select>
 		</div>
-		<button class="search_bar_submit_button" onclick="debugFunction()">搜尋 <i class="fa fa-search"></i></button>
 		<form class="search_bar_checkbox">
 			<div>
-				<input type="checkbox" id="center1" name="center1" value="sbprc">
+				<input type="checkbox" id="center1" name="center1" value="SBPRC">
 				<label for="center1">協康會大口環家長資源中心</label>
 			</div>
 			<div>
-				<input type="checkbox" id="center2" name="center2" value="jcsrc">
+				<input type="checkbox" id="center2" name="center2" value="JCSRC">
 				<label for="center2">賽馬會星亮資源中心</label>
 			</div>
 			<div>
-				<input type="checkbox" id="center3" name="center3" value="hfc">
-				<label for="center3">賽馬會星亮資源中心</label>
+				<input type="checkbox" id="center3" name="center3" value="HFC">
+				<label for="center3">海富中心</label>
 			</div>
 			<div>
-				<input type="checkbox" id="center4" name="center4" value="jcprc">
+				<input type="checkbox" id="center4" name="center4" value="JCPRC">
 				<label for="center4">賽馬會家長資源中心</label>
 			</div>
 			<div>
-				<input type="checkbox" id="center5" name="center5" value="flprc">
+				<input type="checkbox" id="center5" name="center5" value="FLPRC">
 				<label for="center5">粉嶺家長資源中心</label>
 			</div>
 			<div>
-				<input type="checkbox" id="center6" name="center6" value="mosc">
+				<input type="checkbox" id="center6" name="center6" value="MOSC">
 				<label for="center6">馬鞍山中心</label>
 			</div>
 			<div>
-				<input type="checkbox" id="center7" name="center7" value="tcc">
+				<input type="checkbox" id="center7" name="center7" value="TCPRC">
 				<label for="center7">東涌家長資源中心</label>
-			</div>
+			</div>	
 		</form>
+		<div class="row" style="justify-content:end"><button class="search_bar_submit_button" onclick="searchFunction()">搜尋 <i class="fa fa-search"></i></button></div>
 	</div>
 	<!--- Gallery section--->
 	<div class="gallery">
-		<div class="thumbnail">
-			<a href="toy_details.html"><img src="images/placeholder_1.jpg" alt="" /></a>
-			<h>書名</h>
-			<p1>可借出</p1>
-			<p2>訓練功能: Lorem ipsum</p2>
-			<p2>玩具索引號:</p2>
-		</div>
-		<div class="thumbnail">
-			<a href="toy_details.html"><img src="images/placeholder_1.jpg" alt="" /></a>
-			<h>書名</h>
-			<p1>可借出</p1>
-			<p2>訓練功能: Auctor neque, Ipsum suspendisse</p2>
-			<p2>玩具索引號:</p2>
-		</div>
-		<div class="thumbnail">
-			<a href="toy_details.html"><img src="images/placeholder_2.jpg" alt="" /></a>
-			<h>書名</h>
-			<p1>已借出</p1>
-			<p2>訓練功能: Vestibulum morbi, Lorem ipsum, Auctor neque</p2>
-			<p2>玩具索引號:</p2>
-		</div>
+		<div id="search_results"></div>
 	</div>
 
 	<!--- Footer section--->
@@ -106,5 +139,10 @@
 			<p class="copyright">© 2022 協康會，版權所有</p>
 		</div>
 	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </body>
 </html>

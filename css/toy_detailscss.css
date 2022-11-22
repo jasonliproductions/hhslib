@@ -143,16 +143,8 @@ a{
 		width: 100%;
 	}
 
-	.misc_description{
-		font-size: 13px;
-	}
-
-	.title {
-		font-size: 18px;
-	}
-
 	.tab button{
-		font-size: 12px;
+		font-size: 15px;
 		padding: 9px 10px;
 	}
 
@@ -169,4 +161,18 @@ a{
 			padding-top: 20px;
 			justify-content: left;
 		}
+
+		.misc_description {
+			font-size: 13px;
+		}
+
+		.title {
+			font-size: 18px;
+		}
+
+		.tab button {
+			font-size: 12px;
+			padding: 9px 10px;
+		}
+
 	}

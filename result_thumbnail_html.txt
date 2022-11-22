@@ -1,0 +1,7 @@
+		<div class="thumbnail">
+			<a href="toy_details.html"><img src="images/placeholder_1.jpg" alt="" /></a>
+			<h>書名</h>
+			<p1>可借出</p1>
+			<p2>訓練功能: Lorem ipsum</p2>
+			<p2>玩具索引號:</p2>
+		</div>
