@@ -68,6 +68,7 @@ function searchFunction(){
         });
 }
 
+
 function appendData(data){
     var mainDiv = document.getElementById("search_results");
 
@@ -75,23 +76,23 @@ function appendData(data){
 
         var toyTitle = data[i].title; //These lines check if the title is too long
 
-        if (toyTitle.length > 8){
-            toyTitle = toyTitle.substring(0, 8) + "...";
+        if (toyTitle.length > 12){
+            toyTitle = toyTitle.substring(0, 12) + "...";
         } //toyTitle end
 
         var status; //These lines change the status text from A/B to natural language
 
         if(data[i].status == "A"){
-            status = "可借出";
+            status = "●可借出";
         } else {
-            status = "已借出";
+            status = "●已借出";
         } //Status end
 
         var illustration = 'https://prctoylib.heephong.org:10443'+ data[i].illustration; //This line acquires the image from the API
 
         var trainFunction = [];
 
-        if (data[i].prc_train_func.includes("ITEM_01")){
+        if (data[i].prc_train_func.includes("ITEM_01")){ //These if chain turn ITEM_xx into string
             trainFunction.push("大肌肉協調及平衡");
         }
 
@@ -125,10 +126,24 @@ function appendData(data){
 
         if (data[i].prc_train_func.includes("ITEM_09")){
             trainFunction.push("其他");
-        }
+        } //Function end
+
+        var callNo; //These lines ensure Call Numbers are shown correctly: If there are no call No, N/A will be shown and if there is only one call No, no separators will be shown.
+        if(data[i].callno[0].length == 0 && data[i].callno[1].length == 0 ){
+            callNo = data[i].callno.join("") + "N/A";
+        } else if(data[i].callno[0].length != 0 && data[i].callno[1].length == 0 ){
+            callNo = data[i].callno.join("");            
+        } else {
+            callNo = data[i].callno.join(", ");
+        } //Call No End
+        
 
         var div = document.createElement("div");
-        div.innerHTML= '<div class="thumbnail"><a href="toy_details.html"><img src=' + illustration + ' alt="" /></a><h>' + toyTitle + '</h><p1>' + status + '</p1><p2>' + "訓練功能: " + trainFunction + '</p2><p2>' + "玩具索引號: " + data[i].acno + '</p2></div>';
+        div.innerHTML= '<div class="thumbnail"><a href="toy_details.html"><img src=' + illustration + ' onclick=pushData('+ i +') alt="" /></a><h>' + toyTitle + '</h><p1>' + status + '</p1><p2>' + "訓練功能: " + trainFunction.join(", ") + '</p2><p2>' + "玩具索引號: " + callNo + '</p2></div>';
         mainDiv.appendChild(div);
     }
+}
+
+function pushData(i){
+    alert("Instance of array: " + i);
 }
