@@ -28,6 +28,7 @@ function libTab(evt, tabTitle) {
 }
 
 function searchFunction(){
+    document.getElementById("search_results").innerHTML = " ";
     var centerNo = 0;
     var keyword = document.getElementById("keyword").value;
     var training_function = document.getElementById("training_function").value;
@@ -71,9 +72,63 @@ function appendData(data){
     var mainDiv = document.getElementById("search_results");
 
     for (i=0; i < data.length; i++){
+
+        var toyTitle = data[i].title; //These lines check if the title is too long
+
+        if (toyTitle.length > 8){
+            toyTitle = toyTitle.substring(0, 8) + "...";
+        } //toyTitle end
+
+        var status; //These lines change the status text from A/B to natural language
+
+        if(data[i].status == "A"){
+            status = "可借出";
+        } else {
+            status = "已借出";
+        } //Status end
+
+        var illustration = 'https://prctoylib.heephong.org:10443'+ data[i].illustration; //This line acquires the image from the API
+
+        var trainFunction = [];
+
+        if (data[i].prc_train_func.includes("ITEM_01")){
+            trainFunction.push("大肌肉協調及平衡");
+        }
+
+        if (data[i].prc_train_func.includes("ITEM_02")){
+            trainFunction.push("感官訓練");
+        }
+
+        if (data[i].prc_train_func.includes("ITEM_03")){
+            trainFunction.push("小肌肉協調");
+        }
+
+        if (data[i].prc_train_func.includes("ITEM_04")){
+            trainFunction.push("遊戲技能");
+        }
+
+        if (data[i].prc_train_func.includes("ITEM_05")){
+            trainFunction.push("基本手部功能");
+        }
+
+        if (data[i].prc_train_func.includes("ITEM_06")){
+            trainFunction.push("口語前溝通");
+        }
+
+        if (data[i].prc_train_func.includes("ITEM_07")){
+            trainFunction.push("語言理解/表達");
+        }
+
+        if (data[i].prc_train_func.includes("ITEM_08")){
+            trainFunction.push("智能訓練");
+        }        
+
+        if (data[i].prc_train_func.includes("ITEM_09")){
+            trainFunction.push("其他");
+        }
+
         var div = document.createElement("div");
-        div.innerHTML= 
-        data[i].title;
+        div.innerHTML= '<div class="thumbnail"><a href="toy_details.html"><img src=' + illustration + ' alt="" /></a><h>' + toyTitle + '</h><p1>' + status + '</p1><p2>' + "訓練功能: " + trainFunction + '</p2><p2>' + "玩具索引號: " + data[i].acno + '</p2></div>';
         mainDiv.appendChild(div);
     }
 }

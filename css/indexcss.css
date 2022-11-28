@@ -119,11 +119,12 @@ a {
 	.thumbnail {
 		padding-left: 25px;
 		padding-right: 25px;
+		padding-top: 10px;
+		padding-bottom: 10px;
 	}
 
 		.thumbnail h { /* Title text for each thumbnail*/
 			font-weight: bold;
-			padding-right: 50%;
 		}
 
 		.thumbnail p1 { /* Borrow status */
