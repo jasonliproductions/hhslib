@@ -113,6 +113,7 @@ a {
 		object-fit: cover;
 		object-position: 50% 50%;
 		border: 1px solid #000000;
+		cursor: pointer;
 		aspect-ratio: 4/3;
 	}
 

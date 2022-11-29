@@ -71,6 +71,7 @@ function searchFunction(){
 
 function appendData(data){
     var mainDiv = document.getElementById("search_results");
+    var composedData = [];
 
     for (i=0; i < data.length; i++){
 
@@ -81,14 +82,20 @@ function appendData(data){
         } //toyTitle end
 
         var status; //These lines change the status text from A/B to natural language
-
         if(data[i].status == "A"){
             status = "●可借出";
         } else {
             status = "●已借出";
+
         } //Status end
 
-        var illustration = 'https://prctoylib.heephong.org:10443'+ data[i].illustration; //This line acquires the image from the API
+        var illustration;
+        if(data[i].illustration.length == 0){
+            illustration = 'images/placeholder_noimage.jpg';
+        } else {
+            illustration = 'https://prctoylib.heephong.org:10443'+ data[i].illustration; //This line acquires the image from the API
+        }
+
 
         var trainFunction = [];
 
@@ -136,14 +143,15 @@ function appendData(data){
         } else {
             callNo = data[i].callno.join(", ");
         } //Call No End
-        
+        composedData.push(data[i]);
 
         var div = document.createElement("div");
-        div.innerHTML= '<div class="thumbnail"><a href="toy_details.html"><img src=' + illustration + ' onclick=pushData('+ i +') alt="" /></a><h>' + toyTitle + '</h><p1>' + status + '</p1><p2>' + "訓練功能: " + trainFunction.join(", ") + '</p2><p2>' + "玩具索引號: " + callNo + '</p2></div>';
+        div.innerHTML= '<div class="thumbnail"><img src=' + illustration + ' onclick=pushData('+ i +') alt="" /><h>' + toyTitle + '</h><p1 id="status_color">' + status + '</p1><p2>' + "訓練功能: " + trainFunction.join(", ") + '</p2><p2>' + "玩具索引號: " + callNo + '</p2></div>';
         mainDiv.appendChild(div);
     }
 }
 
-function pushData(i){
-    alert("Instance of array: " + i);
+function pushData(retrievedData){
+        alert(typeof(retrievedData));
+        window.location.href = "toy_details.html";
 }
