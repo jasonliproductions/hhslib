@@ -146,12 +146,12 @@ function appendData(data){
         composedData.push(data[i]);
 
         var div = document.createElement("div");
-        div.innerHTML= '<div class="thumbnail"><img src=' + illustration + ' onclick=pushData('+ i +') alt="" /><h>' + toyTitle + '</h><p1 id="status_color">' + status + '</p1><p2>' + "訓練功能: " + trainFunction.join(", ") + '</p2><p2>' + "玩具索引號: " + callNo + '</p2></div>';
+        div.innerHTML= `<div class="thumbnail"><img src=` + illustration + ` onclick="pushData('${data[i].acno}')"` + ` alt="" /><h>' + toyTitle + '</h><p1 id="status_color">` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2></div>`;
         mainDiv.appendChild(div);
     }
 }
 
 function pushData(retrievedData){
-        alert(typeof(retrievedData));
+        alert(retrievedData);
         window.location.href = "toy_details.html";
 }
