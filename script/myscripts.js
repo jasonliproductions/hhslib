@@ -146,12 +146,98 @@ function appendData(data){
         composedData.push(data[i]);
 
         var div = document.createElement("div");
-        div.innerHTML= `<div class="thumbnail"><img src=` + illustration + ` onclick="pushData('${data[i].acno}')"` + ` alt="" /><h>' + toyTitle + '</h><p1 id="status_color">` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2></div>`;
+        div.innerHTML= `<div class="thumbnail"><img src=` + illustration + ` onclick="pushData('${data[i].title}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}')"` + ` alt="" /><h> `+ toyTitle + `</h><p1 id="status_color">` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2></div>`;
         mainDiv.appendChild(div);
     }
 }
 
-function pushData(retrievedData){
-        alert(retrievedData);
+function pushData(title, return_date, target_age, prc_train_func, acno, callno, illustration){
+        sessionStorage.setItem("title", title);
+        sessionStorage.setItem("return_date", return_date);
+        sessionStorage.setItem("target_age", target_age);
+        sessionStorage.setItem("prc_train_func", prc_train_func);
+        sessionStorage.setItem("acno", acno);
+        sessionStorage.setItem("callno", callno);
+        sessionStorage.setItem("illustration", illustration);
         window.location.href = "toy_details.html";
+}
+
+function toyDetailsFill(){
+    getTitle = sessionStorage.getItem("title"); //This section pushes title into this page
+    if(getTitle == "" || getTitle.length == 0){
+        document.getElementById("title").innerHTML = "書名error!";
+    } else{
+        document.getElementById("title").innerHTML = getTitle;
+    }
+
+    getReturnDate = sessionStorage.getItem("return_date"); //This section pushes return date into this page
+    if (getReturnDate == "" || getReturnDate.length ==0){
+        document.getElementById("return_date").innerHTML = "";
+    } else{
+        document.getElementById("return_date").innerHTML = "最快惜出時間: " + return_date;
+    }
+
+    getAge = sessionStorage.getItem("target_age"); //This section pushes target age into this page
+    if(getAge == "" || getAge.length == 0){
+        document.getElementById("target_age").innerHTML += "不適用";
+    } else{
+        document.getElementById("target_age").innerHTML += getAge;
+    }
+
+    getTrainFunction = sessionStorage.getItem("prc_train_func"); //This section pushes training function into this page
+    var trainFunction = [];
+    if (getTrainFunction.includes("ITEM_01")){
+        trainFunction.push("大肌肉協調及平衡");
+    }
+
+    if (getTrainFunction.includes("ITEM_02")){
+        trainFunction.push("感官訓練");
+    }
+
+    if (getTrainFunction.includes("ITEM_03")){
+        trainFunction.push("小肌肉協調");
+    }
+
+    if (getTrainFunction.includes("ITEM_04")){
+        trainFunction.push("遊戲技能");
+    }
+
+    if (getTrainFunction.includes("ITEM_05")){
+        trainFunction.push("基本手部功能");
+    }
+
+    if (getTrainFunction.includes("ITEM_06")){
+        trainFunction.push("口語前溝通");
+    }
+
+    if (getTrainFunction.includes("ITEM_07")){
+        trainFunction.push("語言理解/表達");
+    }
+
+    if (getTrainFunction.includes("ITEM_08")){
+        trainFunction.push("智能訓練");
+    }        
+
+    if (getTrainFunction.includes("ITEM_09")){
+        trainFunction.push("其他");
+    }
+    document.getElementById("training_function").innerHTML += trainFunction.join(", ");
+
+    getAcNo = sessionStorage.getItem("acno"); //This section pushes the Account Number into this page
+    document.getElementById("acno").innerHTML += getAcNo;
+
+    getCallNo = sessionStorage.getItem("callno"); //This section pushes Call Number into this page
+    if(getCallNo == ","){
+        document.getElementById("callno").innerHTML += "N/A";
+    } else{
+        document.getElementById("callno").innerHTML += getCallNo;
+    }
+
+    getIllustration = sessionStorage.getItem("illustration");
+    if(getIllustration.length == 0){
+        document.getElementById("thumbnail").innerHTML = `<img src ="images/placeholder_noimage.jpg" alt=""/> `
+    } else{
+        document.getElementById("thumbnail").innerHTML = `<img src="https://prctoylib.heephong.org:10443` + getIllustration + `" alt="" />`;
+    }
+
 }

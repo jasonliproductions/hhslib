@@ -11,7 +11,7 @@
 </head>
 
 
-<body>
+<body onLoad="toyDetailsFill()">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <!--- Header--->
@@ -47,18 +47,18 @@
     <a href="index.html" class="text-decoration-none" style="padding-left: 7%; color: #000000;">&#60;返回</a>
     <!--- Content section--->
     <div class="main_container">
-        <div class="thumbnail">
-            <img src="images/placeholder_1.jpg" alt="" />
+        <div class="thumbnail" id="thumbnail">
+
         </div>
         <!--- Description--->
         <div class="description_container">
             <div style="float: right;">已借出</div>
-            <div class="title">書名</div>
-            <div class="quickest_borrow_date">最快借出時間:</div>
-            <div>年齡</div>
-            <div class="misc_description" style="padding-bottom: 6px">訓練功能: Lorem Ipsum</div>
-            <div class="misc_description" style="padding-bottom: 6px">玩具索引號: SJ552 4444</div>
-            <div class="misc_description" style="padding-bottom: 20px">編號: ABCDEF</div>
+            <div class="title" id="title">書名</div>
+            <div class="quickest_borrow_date" id="return_date"></div>
+            <div id="target_age">年齡: </div>
+            <div class="misc_description" style="padding-bottom: 6px" id="training_function">訓練功能: </div>
+            <div class="misc_description" style="padding-bottom: 6px" id="callno">玩具索引號: </div>
+            <div class="misc_description" style="padding-bottom: 20px" id="acno">編號: </div>
             <!--- Tab menu--->
             <div class="tab">
                 <button class="tablinks" onclick="libTab(event, 'Instructions')">玩法</button>
