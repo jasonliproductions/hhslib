@@ -60,7 +60,7 @@ function searchFunction(){
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log('Success:', data);
+            console.log('Success (Query):', data);
             appendData(data);
         })
         .catch((error) => {
@@ -71,7 +71,6 @@ function searchFunction(){
 
 function appendData(data){
     var mainDiv = document.getElementById("search_results");
-    var composedData = [];
 
     for (i=0; i < data.length; i++){
 
@@ -82,11 +81,13 @@ function appendData(data){
         } //toyTitle end
 
         var status; //These lines change the status text from A/B to natural language
+        var color;
         if(data[i].status == "A"){
             status = "●可借出";
+            color = "color: #008000";
         } else {
             status = "●已借出";
-
+            color = "color: #ff0000";
         } //Status end
 
         var illustration;
@@ -143,15 +144,15 @@ function appendData(data){
         } else {
             callNo = data[i].callno.join(", ");
         } //Call No End
-        composedData.push(data[i]);
+        var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "");
 
         var div = document.createElement("div");
-        div.innerHTML= `<div class="thumbnail"><img src=` + illustration + ` onclick="pushData('${data[i].title}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}')"` + ` alt="" /><h> `+ toyTitle + `</h><p1 id="status_color">` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2></div>`;
+        div.innerHTML= `<div class="thumbnail"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /><h> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2></div>`;
         mainDiv.appendChild(div);
     }
 }
 
-function pushData(title, return_date, target_age, prc_train_func, acno, callno, illustration){
+function pushData(title, return_date, target_age, prc_train_func, acno, callno, illustration, status){
         sessionStorage.setItem("title", title);
         sessionStorage.setItem("return_date", return_date);
         sessionStorage.setItem("target_age", target_age);
@@ -159,22 +160,26 @@ function pushData(title, return_date, target_age, prc_train_func, acno, callno, 
         sessionStorage.setItem("acno", acno);
         sessionStorage.setItem("callno", callno);
         sessionStorage.setItem("illustration", illustration);
+        sessionStorage.setItem("status", status);
         window.location.href = "toy_details.html";
 }
 
 function toyDetailsFill(){
     getTitle = sessionStorage.getItem("title"); //This section pushes title into this page
+    var newTitle = getTitle.replaceAll("&quotmasta", "'");
     if(getTitle == "" || getTitle.length == 0){
         document.getElementById("title").innerHTML = "書名error!";
     } else{
-        document.getElementById("title").innerHTML = getTitle;
+        document.getElementById("title").innerHTML = newTitle;
     }
 
     getReturnDate = sessionStorage.getItem("return_date"); //This section pushes return date into this page
     if (getReturnDate == "" || getReturnDate.length ==0){
         document.getElementById("return_date").innerHTML = "";
     } else{
-        document.getElementById("return_date").innerHTML = "最快惜出時間: " + return_date;
+        var idx = getReturnDate.indexOf(" ");
+        var dateString = getReturnDate.substr(0, idx + 1);
+        document.getElementById("return_date").innerHTML = "最快惜出時間: " + dateString;
     }
 
     getAge = sessionStorage.getItem("target_age"); //This section pushes target age into this page
@@ -233,11 +238,33 @@ function toyDetailsFill(){
         document.getElementById("callno").innerHTML += getCallNo;
     }
 
-    getIllustration = sessionStorage.getItem("illustration");
+    getIllustration = sessionStorage.getItem("illustration"); //This section transfers the image into this page
     if(getIllustration.length == 0){
-        document.getElementById("thumbnail").innerHTML = `<img src ="images/placeholder_noimage.jpg" alt=""/> `
+        document.getElementById("thumbnail").innerHTML = `<img src ="images/placeholder_noimage.jpg" alt=""/>`
     } else{
         document.getElementById("thumbnail").innerHTML = `<img src="https://prctoylib.heephong.org:10443` + getIllustration + `" alt="" />`;
     }
 
+    getStatus = sessionStorage.getItem("status"); //This section pushes borrow status into this page
+    if(getStatus == "A"){
+        document.getElementById("status").innerHTML += "●可借出";
+        document.getElementById("status").style.color = "green";
+    } else {
+        document.getElementById("status").innerHTML += "●已借出";
+        document.getElementById("status").style.color = "red";    
+    }
+
+    fetchDescription(getAcNo);
+}
+
+async function fetchDescription(acno){
+    fetch('https://prctoylib.heephong.org:10443/sku/'+acno)
+    .then((response) => response.json())
+    .then((data) => {console.log(data); appendDescription(data)})
+    .catch((error) => console.log("Error: ", error));
+}
+
+function appendDescription(data){
+    document.getElementById("Instructions").innerHTML = data.play_desc;
+    document.getElementById("Quantity").innerHTML = data.parts_desc;
 }
