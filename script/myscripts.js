@@ -76,9 +76,9 @@ function appendData(data){
 
         var toyTitle = data[i].title; //These lines check if the title is too long
 
-        if (toyTitle.length > 12){
-            toyTitle = toyTitle.substring(0, 12) + "...";
-        } //toyTitle end
+        //if (toyTitle.length > 12){
+            //toyTitle = toyTitle.substring(0, 12) + "...";
+        //} //toyTitle end
 
         var status; //These lines change the status text from A/B to natural language
         var color;
@@ -147,25 +147,24 @@ function appendData(data){
         var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "");
 
         var div = document.createElement("div");
-        div.innerHTML= `<div class="thumbnail"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /><h> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2></div>`;
+        div.innerHTML= `<div class="thumbnail"><a href="toy_details.html"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /></a><h> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2></div>`;
         mainDiv.appendChild(div);
     }
 }
 
 function pushData(title, return_date, target_age, prc_train_func, acno, callno, illustration, status){
-        sessionStorage.setItem("title", title);
-        sessionStorage.setItem("return_date", return_date);
-        sessionStorage.setItem("target_age", target_age);
-        sessionStorage.setItem("prc_train_func", prc_train_func);
-        sessionStorage.setItem("acno", acno);
-        sessionStorage.setItem("callno", callno);
-        sessionStorage.setItem("illustration", illustration);
-        sessionStorage.setItem("status", status);
-        window.location.href = "toy_details.html";
+        localStorage.setItem("title", title);
+        localStorage.setItem("return_date", return_date);
+        localStorage.setItem("target_age", target_age);
+        localStorage.setItem("prc_train_func", prc_train_func);
+        localStorage.setItem("acno", acno);
+        localStorage.setItem("callno", callno);
+        localStorage.setItem("illustration", illustration);
+        localStorage.setItem("status", status);
 }
 
 function toyDetailsFill(){
-    getTitle = sessionStorage.getItem("title"); //This section pushes title into this page
+    getTitle = localStorage.getItem("title"); //This section pushes title into this page
     var newTitle = getTitle.replaceAll("&quotmasta", "'");
     if(getTitle == "" || getTitle.length == 0){
         document.getElementById("title").innerHTML = "書名error!";
@@ -173,7 +172,7 @@ function toyDetailsFill(){
         document.getElementById("title").innerHTML = newTitle;
     }
 
-    getReturnDate = sessionStorage.getItem("return_date"); //This section pushes return date into this page
+    getReturnDate = localStorage.getItem("return_date"); //This section pushes return date into this page
     if (getReturnDate == "" || getReturnDate.length ==0){
         document.getElementById("return_date").innerHTML = "";
     } else{
@@ -182,14 +181,14 @@ function toyDetailsFill(){
         document.getElementById("return_date").innerHTML = "最快惜出時間: " + dateString;
     }
 
-    getAge = sessionStorage.getItem("target_age"); //This section pushes target age into this page
+    getAge = localStorage.getItem("target_age"); //This section pushes target age into this page
     if(getAge == "" || getAge.length == 0){
         document.getElementById("target_age").innerHTML += "不適用";
     } else{
         document.getElementById("target_age").innerHTML += getAge;
     }
 
-    getTrainFunction = sessionStorage.getItem("prc_train_func"); //This section pushes training function into this page
+    getTrainFunction = localStorage.getItem("prc_train_func"); //This section pushes training function into this page
     var trainFunction = [];
     if (getTrainFunction.includes("ITEM_01")){
         trainFunction.push("大肌肉協調及平衡");
@@ -228,24 +227,24 @@ function toyDetailsFill(){
     }
     document.getElementById("training_function").innerHTML += trainFunction.join(", ");
 
-    getAcNo = sessionStorage.getItem("acno"); //This section pushes the Account Number into this page
+    getAcNo = localStorage.getItem("acno"); //This section pushes the Account Number into this page
     document.getElementById("acno").innerHTML += getAcNo;
 
-    getCallNo = sessionStorage.getItem("callno"); //This section pushes Call Number into this page
+    getCallNo = localStorage.getItem("callno"); //This section pushes Call Number into this page
     if(getCallNo == ","){
         document.getElementById("callno").innerHTML += "N/A";
     } else{
         document.getElementById("callno").innerHTML += getCallNo;
     }
 
-    getIllustration = sessionStorage.getItem("illustration"); //This section transfers the image into this page
+    getIllustration = localStorage.getItem("illustration"); //This section transfers the image into this page
     if(getIllustration.length == 0){
         document.getElementById("thumbnail").innerHTML = `<img src ="images/placeholder_noimage.jpg" alt=""/>`
     } else{
         document.getElementById("thumbnail").innerHTML = `<img src="https://prctoylib.heephong.org:10443` + getIllustration + `" alt="" />`;
     }
 
-    getStatus = sessionStorage.getItem("status"); //This section pushes borrow status into this page
+    getStatus = localStorage.getItem("status"); //This section pushes borrow status into this page
     if(getStatus == "A"){
         document.getElementById("status").innerHTML += "●可借出";
         document.getElementById("status").style.color = "green";
@@ -260,11 +259,11 @@ function toyDetailsFill(){
 async function fetchDescription(acno){
     fetch('https://prctoylib.heephong.org:10443/sku/'+acno)
     .then((response) => response.json())
-    .then((data) => {console.log(data); appendDescription(data)})
+    .then((data) => {console.log(data); appendDescription(data);})
     .catch((error) => console.log("Error: ", error));
 }
 
 function appendDescription(data){
-    document.getElementById("Instructions").innerHTML = data.play_desc;
-    document.getElementById("Quantity").innerHTML = data.parts_desc;
+    document.getElementById("Instructions").innerHTML = data[0].play_desc;
+    document.getElementById("Quantity").innerHTML = data[0].parts_desc;
 }

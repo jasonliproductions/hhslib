@@ -177,6 +177,10 @@ a {
 		grid-template-columns: 50% 50%;
 	}
 
+	.thumbnail h { /* Title text for each thumbnail*/
+		font-size: 14px;
+	}
+
 	.search_bar_field_searchterm {
 		height: 42px;
 		font-size: 14px;
