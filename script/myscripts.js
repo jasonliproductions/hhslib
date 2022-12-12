@@ -71,7 +71,11 @@ function searchFunction(){
 
 function appendData(data){
     var mainDiv = document.getElementById("search_results");
-
+    if(data.length == 0){
+        emptyResult("hidden");
+        alert("找不到相關搜尋結果!\n建議:\n1.確認關鍵字正確無誤\n2.擴大中心範圍");
+    } else {
+        emptyResult("visible");
     for (i=0; i < data.length; i++){
 
         var toyTitle = data[i].title; //These lines check if the title is too long
@@ -145,11 +149,18 @@ function appendData(data){
             callNo = data[i].callno.join(", ");
         } //Call No End
         var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "");
-
         var div = document.createElement("div");
-        div.innerHTML= `<div class="thumbnail"><a href="toy_details.html"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /></a><h> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2></div>`;
+        div.classList.add("thumbnail");
+        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ newTitle +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /></a><h title="`+ newTitle +`"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
         mainDiv.appendChild(div);
     }
+    paginationFunction();}
+
+}
+
+function emptyResult(visible){
+    var paginationVisibility = document.getElementById("pageId");
+    paginationVisibility.style.visibility = visible;
 }
 
 function pushData(title, return_date, target_age, prc_train_func, acno, callno, illustration, status){
@@ -266,4 +277,142 @@ async function fetchDescription(acno){
 function appendDescription(data){
     document.getElementById("Instructions").innerHTML = data[0].play_desc;
     document.getElementById("Quantity").innerHTML = data[0].parts_desc;
+}
+
+// pagination
+
+
+
+function pageHidden(currentPageNo) {
+    console.log("currentPageNo", currentPageNo);
+    const pageNoList = document.getElementById("pagination-numbers");
+    const listNoItems = pageNoList.querySelectorAll("button");
+    
+    listNoItems.forEach((item, index) => {
+        item.classList.add("hidden");
+        if (index == currentPageNo || index == currentPageNo +1   || index == currentPageNo -1 || index == currentPageNo +2   || index == currentPageNo -2 || index == 0 || index == listNoItems.length-1) {
+          item.classList.remove("hidden");
+        }
+        if(index == 0 && index != currentPageNo){
+            item.classList.add("firstPage");
+        }else if(index == 0 && index == currentPageNo){
+            item.classList.remove("firstPage");
+        }
+        if(index == listNoItems.length-1 && index != currentPageNo){
+            item.classList.add("lastPage");
+        }else if(index == listNoItems.length-1 && index == currentPageNo){
+            item.classList.remove("lastPage");
+        }
+      });
+}
+
+
+function paginationFunction(){
+    document.getElementById("pageId").style.display="flex";
+    document.getElementById("pagination-numbers").innerHTML="";
+const paginationNumbers = document.getElementById("pagination-numbers");
+const paginatedList = document.getElementById("search_results");
+const listItems = paginatedList.querySelectorAll("div");
+
+
+const nextButton = document.getElementById("next-button");
+const prevButton = document.getElementById("prev-button");
+
+const paginationLimit = 12;
+const pageCount = Math.ceil(listItems.length / paginationLimit);
+let currentPage = 1;
+
+const disableButton = (button) => {
+  button.classList.add("disabled");
+  button.setAttribute("disabled", true);
+};
+
+const enableButton = (button) => {
+  button.classList.remove("disabled");
+  button.removeAttribute("disabled");
+};
+
+const handlePageButtonsStatus = () => {
+  if (currentPage === 1) {
+    disableButton(prevButton);
+  } else {
+    enableButton(prevButton);
+  }
+
+  if (pageCount === currentPage) {
+    disableButton(nextButton);
+  } else {
+    enableButton(nextButton);
+  }
+};
+
+const handleActivePageNumber = () => {
+  document.querySelectorAll(".pagination-number").forEach((button) => {
+    button.classList.remove("active");
+    const pageIndex = Number(button.getAttribute("page-index"));
+    if (pageIndex == currentPage) {
+      button.classList.add("active");
+    }
+  });
+};
+
+const appendPageNumber = (index) => {
+  const pageNumber = document.createElement("button");
+  pageNumber.className = "pagination-number";
+  pageNumber.innerHTML = index;
+  pageNumber.setAttribute("page-index", index);
+  pageNumber.setAttribute("aria-label", "Page " + index);
+
+  pageNumber.addEventListener("click", () => {
+    pageHidden(index -1);
+  });
+  paginationNumbers.appendChild(pageNumber);
+};
+
+const getPaginationNumbers = () => {
+  for (let i = 1; i <= pageCount; i++) {
+        appendPageNumber(i);
+  }
+};
+
+const setCurrentPage = (pageNum) => {
+  currentPage = pageNum;
+
+  handleActivePageNumber();
+  handlePageButtonsStatus();
+  
+  const prevRange = (pageNum - 1) * paginationLimit;
+  const currRange = pageNum * paginationLimit;
+
+  listItems.forEach((item, index) => {
+    item.classList.add("hidden");
+    if (index >= prevRange && index < currRange) {
+      item.classList.remove("hidden");
+    }
+  });
+};
+
+
+  getPaginationNumbers();
+  setCurrentPage(1);
+  pageHidden(1);
+  prevButton.addEventListener("click", () => {
+    setCurrentPage(currentPage - 1);
+    pageHidden(currentPage -1);
+  });
+
+  nextButton.addEventListener("click", () => {
+    setCurrentPage(currentPage + 1);
+    pageHidden(currentPage -1);
+  });
+
+  document.querySelectorAll(".pagination-number").forEach((button) => {
+    const pageIndex = Number(button.getAttribute("page-index"));
+
+    if (pageIndex) {
+      button.addEventListener("click", () => {
+        setCurrentPage(pageIndex);
+      });
+    }
+  });
 }

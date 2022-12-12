@@ -122,9 +122,22 @@
 		<div class="row" style="justify-content:end"><button class="search_bar_submit_button" onclick="searchFunction()">搜尋 <i class="fa fa-search"></i></button></div>
 	</div>
 	<!--- Gallery section--->
-	<div class="gallery" id="search_results">
+	<div class="gallery" id="search_results"  data-current-page="1" aria-live="polite" >
+		
 	</div>
-
+	<nav id="pageId" class="pagination-container" style="display: none">
+		<button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page">
+		  &lt;
+		</button>
+	
+		<div id="pagination-numbers">
+	
+		</div>
+	
+		<button class="pagination-button" id="next-button" aria-label="Next page" title="Next page">
+		  &gt;
+		</button>
+	  </nav>
 	<!--- Footer section--->
 	<footer class="footer">
 		<div class="footer_container">
