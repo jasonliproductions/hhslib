@@ -138,10 +138,10 @@ function appendData(data){
         } else {
             callNo = data[i].callno.join(", ");
         } //Call No End
-        var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "");
+        var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "").replaceAll('"', "&doublequotmasta");
         var div = document.createElement("div");
         div.classList.add("thumbnail");
-        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /></a><h title="`+ data[i].title +`"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
+        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title.replaceAll('"', "'") +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /></a><h title="`+ data[i].title.replaceAll('"', "'") +`"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
         mainDiv.appendChild(div);
     }
     paginationFunction();}
@@ -166,7 +166,7 @@ function pushData(title, return_date, target_age, prc_train_func, acno, callno, 
 
 function toyDetailsFill(){
     getTitle = localStorage.getItem("title"); //This section pushes title into this page
-    var newTitle = getTitle.replaceAll("&quotmasta", "'");
+    var newTitle = getTitle.replaceAll("&quotmasta", "'").replaceAll("&doublequotmasta", '"');
     if(getTitle == "" || getTitle.length == 0){
         document.getElementById("title").innerHTML = "書名error!";
     } else{
