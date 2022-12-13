@@ -14,6 +14,11 @@
 <body onLoad="toyDetailsFill()">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script>
+        function closeWindow(){
+            window.close();
+        }
+    </script>
     <!--- Header--->
     <header class="header">
 		<nav class="navbar navbar-expand-lg navbar-light">
@@ -44,7 +49,7 @@
 				</div>
 		</nav>
     </header>
-    <a href="index.html" class="text-decoration-none" style="padding-left: 7%; color: #000000;">&#60;返回</a>
+    <a onClick="closeWindow()" class="text-decoration-none" style="padding-left: 7%; color: #000000; cursor: pointer;">&#60;返回</a>
     <!--- Content section--->
     <div class="main_container">
         <div class="thumbnail" id="thumbnail">

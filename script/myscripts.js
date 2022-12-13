@@ -1,18 +1,3 @@
-function debugFunction(){
-    var selectedCenters = [];
-    var centerNo = 0;
-    var keyword = document.getElementById("keyword").value;
-
-    for(i=0; i<7; i++){
-        centerNo++;
-        if (document.getElementById("center" + centerNo).checked == true){
-            selectedCenters.push(document.getElementById("center" + centerNo).value);
-        }
-    }
-
-    alert(keyword);
-}
-
 function libTab(evt, tabTitle) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -29,6 +14,8 @@ function libTab(evt, tabTitle) {
 
 function searchFunction(){
     document.getElementById("search_results").innerHTML = " ";
+    document.getElementById("empty_results").innerHTML = " ";
+    emptyResult("hidden");
     var centerNo = 0;
     var keyword = document.getElementById("keyword").value;
     var training_function = document.getElementById("training_function").value;
@@ -71,18 +58,21 @@ function searchFunction(){
 
 function appendData(data){
     var mainDiv = document.getElementById("search_results");
+    var emptyDiv = document.getElementById("empty_results");
     if(data.length == 0){
         emptyResult("hidden");
-        alert("找不到相關搜尋結果!\n建議:\n1.確認關鍵字正確無誤\n2.擴大中心範圍");
+        //alert("找不到相關搜尋結果!\n建議:\n1.確認關鍵字正確無誤\n2.擴大中心範圍");
+        emptyDiv.innerHTML = `找不到相關搜尋結果!<div class="empty_results_subtitles">建議:<br />1.確認關鍵字正確無誤。<br />2.擴大中心範圍。<br />3.使用較少關鍵字。</div>`;
     } else {
         emptyResult("visible");
     for (i=0; i < data.length; i++){
 
         var toyTitle = data[i].title; //These lines check if the title is too long
 
-        //if (toyTitle.length > 12){
+        //if (toyTitle.length > 12 && $(document).width() < 780){
             //toyTitle = toyTitle.substring(0, 12) + "...";
-        //} //toyTitle end
+        //}
+
 
         var status; //These lines change the status text from A/B to natural language
         var color;
@@ -151,7 +141,7 @@ function appendData(data){
         var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "");
         var div = document.createElement("div");
         div.classList.add("thumbnail");
-        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ newTitle +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /></a><h title="`+ newTitle +`"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
+        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /></a><h title="`+ data[i].title +`"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
         mainDiv.appendChild(div);
     }
     paginationFunction();}
