@@ -18,7 +18,12 @@ function searchFunction(){
     emptyResult("hidden");
     var centerNo = 0;
     var keyword = document.getElementById("keyword").value;
-    var training_function = document.getElementById("training_function").value;
+    var training_function = [];
+    if (document.getElementById("training_function").value != "ITEM_*")
+    {
+        training_function.push(document.getElementById("training_function").value);
+    }
+
     var selectedCenters = [];
     
     for(i=0; i<7; i++){
@@ -31,7 +36,7 @@ function searchFunction(){
     const data = {
         keyword: keyword,
         training_function: { 
-            prc: [training_function], 
+            prc: training_function, 
             sccc: [] 
         },
         cent_code: selectedCenters
