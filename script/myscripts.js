@@ -33,6 +33,12 @@ function searchFunction(){
         }
     }
     
+    if(selectedCenters.length == 0){
+        for(h=0; h<7; h++){
+            selectedCenters.push(document.getElementById("center" + (h + 1)).value);
+        }
+    }
+
     const data = {
         keyword: keyword,
         training_function: { 
@@ -74,9 +80,9 @@ function appendData(data){
 
         var toyTitle = data[i].title; //These lines check if the title is too long
 
-        //if (toyTitle.length > 12 && $(document).width() < 780){
-            //toyTitle = toyTitle.substring(0, 12) + "...";
-        //}
+        if (toyTitle.length > 12){
+            toyTitle = toyTitle.substring(0, 12) + "...";
+        }
 
 
         var status; //These lines change the status text from A/B to natural language
@@ -99,7 +105,7 @@ function appendData(data){
 
         var trainFunction = [];
 
-        if (data[i].prc_train_func.includes("ITEM_01")){ //These if chain turn ITEM_xx into string
+        if (data[i].prc_train_func.includes("ITEM_01")){ //This if chain turn ITEM_xx into string
             trainFunction.push("大肌肉協調及平衡");
         }
 
@@ -133,7 +139,12 @@ function appendData(data){
 
         if (data[i].prc_train_func.includes("ITEM_09")){
             trainFunction.push("其他");
-        } //Function end
+        }
+
+        if(trainFunction.length == 0){ //If trainFunction is null, "不適用" will be pushed instead.
+            trainFunction.push("不適用");
+        }
+        //Function end
 
         var callNo; //These lines ensure Call Numbers are shown correctly: If there are no call No, N/A will be shown and if there is only one call No, no separators will be shown.
         if(data[i].callno[0].length == 0 && data[i].callno[1].length == 0 ){
@@ -146,7 +157,7 @@ function appendData(data){
         var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "").replaceAll('"', "&doublequotmasta");
         var div = document.createElement("div");
         div.classList.add("thumbnail");
-        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title.replaceAll('"', "'") +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}')"` + ` alt="" /></a><h title="`+ data[i].title.replaceAll('"', "'") +`"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
+        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title.replaceAll('"', "'") +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}', '${data[i].cent_code}')"` + ` alt="" /></a><h title="`+ data[i].title.replaceAll('"', "'") +`"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
         mainDiv.appendChild(div);
     }
     paginationFunction();}
@@ -158,7 +169,7 @@ function emptyResult(visible){
     paginationVisibility.style.visibility = visible;
 }
 
-function pushData(title, return_date, target_age, prc_train_func, acno, callno, illustration, status){
+function pushData(title, return_date, target_age, prc_train_func, acno, callno, illustration, status, cent_code){
         localStorage.setItem("title", title);
         localStorage.setItem("return_date", return_date);
         localStorage.setItem("target_age", target_age);
@@ -167,6 +178,7 @@ function pushData(title, return_date, target_age, prc_train_func, acno, callno, 
         localStorage.setItem("callno", callno);
         localStorage.setItem("illustration", illustration);
         localStorage.setItem("status", status);
+        localStorage.setItem("cent_code", cent_code);
 }
 
 function toyDetailsFill(){
@@ -184,7 +196,7 @@ function toyDetailsFill(){
     } else{
         var idx = getReturnDate.indexOf(" ");
         var dateString = getReturnDate.substr(0, idx + 1);
-        document.getElementById("return_date").innerHTML = "最快惜出時間: " + dateString;
+        document.getElementById("return_date").innerHTML = "最快借出時間: " + dateString;
     }
 
     getAge = localStorage.getItem("target_age"); //This section pushes target age into this page
@@ -231,7 +243,28 @@ function toyDetailsFill(){
     if (getTrainFunction.includes("ITEM_09")){
         trainFunction.push("其他");
     }
+    if (getTrainFunction.length == 0){
+        trainFunction.push("不適用");
+    }
     document.getElementById("training_function").innerHTML += trainFunction.join(", ");
+
+    getCentNo = localStorage.getItem("cent_code"); //This section pushes the Center into this page
+    switch(getCentNo){
+        case "SBPRC": document.getElementById("cent_code").innerHTML += "協康會大口環家長資源中心";
+        break;
+        case "JCSRC": document.getElementById("cent_code").innerHTML += "賽馬會星亮資源中心";
+        break;
+        case "HFC" : document.getElementById("cent_code").innerHTML += "海富中心";
+        break;
+        case "JCPRC" : document.getElementById("cent_code").innerHTML += "賽馬會家長資源中心";
+        break;
+        case "FLPRC" : document.getElementById("cent_code").innerHTML += "粉嶺家長資源中心";
+        break;
+        case "MOSC" : document.getElementById("cent_code").innerHTML += "馬鞍山中心";
+        break;
+        case "TCPRC" : document.getElementById("cent_code").innerHTML += "東涌家長資源中心";
+        break;
+    }
 
     getAcNo = localStorage.getItem("acno"); //This section pushes the Account Number into this page
     document.getElementById("acno").innerHTML += getAcNo;

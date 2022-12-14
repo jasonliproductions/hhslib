@@ -75,6 +75,17 @@
 		<div>
 			<input style="padding-left: 20px;" id="keyword" class="search_bar_field_searchterm" placeholder="輸入關鍵字 (物品名稱、出版商)" type="text">
 		</div>
+	<!---Script for enter hotkey-->
+		<script>
+			var input = document.getElementById("keyword"); //These scripts control if enter is pressed while typing in the search bar, search button will be pressed
+			input.addEventListener("keypress", function(event){
+				if(event.key == "Enter"){
+					event.preventDefault();
+					document.getElementById("search submit button").click();
+				}
+			});
+		</script>
+	<!---End of hotkey script-->
 		<div>
 			<select id="training_function" style="padding-left: 12px;" class="search_bar_field_searchterm_category">
 				<option value="ITEM_*">無分類</option>
@@ -119,7 +130,7 @@
 				<label for="center7">東涌家長資源中心</label>
 			</div>	
 		</form>
-		<div class="row" style="justify-content:end"><button class="search_bar_submit_button" onclick="searchFunction()">搜尋 <i class="fa fa-search"></i></button></div>
+		<div class="row" style="justify-content:end"><button class="search_bar_submit_button" id="search submit button" onclick="searchFunction()">搜尋 <i class="fa fa-search"></i></button></div>
 	</div>
 	<!--- Gallery section--->
 	<div class="gallery" id="search_results"  data-current-page="1" aria-live="polite" >
