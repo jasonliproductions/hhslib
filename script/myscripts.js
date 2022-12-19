@@ -157,11 +157,32 @@ function appendData(data){
         var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "").replaceAll('"', "&doublequotmasta");
         var div = document.createElement("div");
         div.classList.add("thumbnail");
-        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title.replaceAll('"', "'") +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}', '${data[i].cent_code}')"` + ` alt="" /></a><h title="`+ data[i].title.replaceAll('"', "'") +`"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
+        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title.replaceAll('"', "'") +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}', '${data[i].cent_code}')"` + ` alt="" /></a><h id="title`+ i +`" title="`+ data[i].title.replaceAll('"', "'") +`" onClick="titleExpandCollapse('${"title"+i}', '${data[i].title}')"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
         mainDiv.appendChild(div);
+
     }
     paginationFunction();}
 
+}
+
+let titleShortenerBool = true;
+
+function titleExpandCollapse(titleId, title){
+    titleShortenerBool = !titleShortenerBool;
+    currentDiv = document.getElementById(titleId);
+    var resultantTitle;
+
+    if(title.length > 12){
+        resultantTitle = title.substr(0, 12) + "..."
+    } else {
+        resultantTitle = title;
+    }
+
+    if(titleShortenerBool == true){
+        currentDiv.innerHTML = resultantTitle;
+    } else {
+        currentDiv.innerHTML = title;
+    }
 }
 
 function emptyResult(visible){
