@@ -66,6 +66,7 @@ function searchFunction(){
         });
 }
 
+let titleShortenerBool = true;
 
 function appendData(data){
     var mainDiv = document.getElementById("search_results");
@@ -146,6 +147,24 @@ function appendData(data){
         }
         //Function end
 
+        var center; //This line acuiqres the center code and converts them into tangible text
+        switch(data[i].cent_code){
+            case "SBPRC": center = "協康會大口環家長資源中心";
+            break;
+            case "JCSRC": center = "賽馬會星亮資源中心";
+            break;
+            case "HFC" : center = "海富中心";
+            break;
+            case "JCPRC" : center = "賽馬會家長資源中心";
+            break;
+            case "FLPRC" : center = "粉嶺家長資源中心";
+            break;
+            case "MOSC" : center = "馬鞍山中心";
+            break;
+            case "TCPRC" : center = "東涌家長資源中心";
+            break;
+        }
+
         var callNo; //These lines ensure Call Numbers are shown correctly: If there are no call No, N/A will be shown and if there is only one call No, no separators will be shown.
         if(data[i].callno[0].length == 0 && data[i].callno[1].length == 0 ){
             callNo = data[i].callno.join("") + "N/A";
@@ -157,7 +176,7 @@ function appendData(data){
         var newTitle = data[i].title.replaceAll('\'', "&quotmasta").replaceAll('\n', "").replaceAll('"', "&doublequotmasta");
         var div = document.createElement("div");
         div.classList.add("thumbnail");
-        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title.replaceAll('"', "'") +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}', '${data[i].cent_code}')"` + ` alt="" /></a><h id="title`+ i +`" title="`+ data[i].title.replaceAll('"', "'") +`" onClick="titleExpandCollapse('${"title"+i}', '${data[i].title}')"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2>`;
+        div.innerHTML= `<a href="toy_details.html" target="_blank" title="`+ data[i].title.replaceAll('"', "'") +`"><img src=` + illustration + ` onclick="pushData('${newTitle}', '${data[i].return_date}', '${data[i].target_age}', '${data[i].prc_train_func}','${data[i].acno}', '${data[i].callno}', '${data[i].illustration}', '${data[i].status}', '${data[i].cent_code}')"` + ` alt="" /></a><h id="title`+ i +`" title="`+ data[i].title.replaceAll('"', "'") +`" onClick="titleExpandCollapse('${"title"+i}', '${data[i].title}')"> `+ toyTitle + `</h><p1 style='` + color + `'>` + status + `</p1><p2>` + "訓練功能: " + trainFunction.join(", ") + `</p2><p2>` + "玩具索引號: " + callNo + `</p2><p2>` + "中心: " + center + `</p2>`;
         mainDiv.appendChild(div);
 
     }
@@ -165,7 +184,7 @@ function appendData(data){
 
 }
 
-let titleShortenerBool = true;
+
 
 function titleExpandCollapse(titleId, title){
     titleShortenerBool = !titleShortenerBool;
@@ -210,6 +229,7 @@ function toyDetailsFill(){
     } else{
         document.getElementById("title").innerHTML = newTitle;
     }
+        document.getElementById("browserTitle").innerHTML = newTitle + " - 玩具詳情";
 
     getReturnDate = localStorage.getItem("return_date"); //This section pushes return date into this page
     if (getReturnDate == "" || getReturnDate.length ==0){

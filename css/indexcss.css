@@ -138,7 +138,6 @@ a {
 		padding-right: 25px;
 		padding-top: 10px;
 		padding-bottom: 10px;
-		height: 350px;
 	}
 
 		.thumbnail h { /* Title text for each thumbnail*/
@@ -247,7 +246,7 @@ a {
 	}
 
 	.thumbnail{
-		height: 300px;
+		height: 325px;
 	}
 
 	.thumbnail h { /* Title text for each thumbnail*/
@@ -272,7 +271,7 @@ a {
 	}
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 420px) {
 	.header_tab {
 		display: grid;
 		grid-template-columns: auto;
@@ -305,7 +304,7 @@ a {
 	}
 
 	.thumbnail{
-		height: 264px;
+		height: 340px;
 	}
 
 	.search_bar_submit_button {
