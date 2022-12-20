@@ -19,6 +19,11 @@ a {
 	margin: auto;
 }
 
+.main_container{
+	padding-left: 10%;
+	line-height: 34px;
+	min-height: calc(100vh - 304px);
+}
 
 .footer{
 	border-top: 20px solid #ED6E23;

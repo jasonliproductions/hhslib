@@ -24,6 +24,7 @@ a{
 	padding-left: 7%;
 	padding-right: 7%;
 	display: flex;
+	min-height: calc(100vh - 304px);
 }
 
 .thumbnail{
